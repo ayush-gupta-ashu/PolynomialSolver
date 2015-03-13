@@ -1,0 +1,71 @@
+# PolynomialSolver
+
+
+''' 3. Write a class PolynomialSolver that solves for roots of polynomials with bisection search method BisectionSearch(), Secant method Secant() (and its variant RgulaFalsi method SecantRF()) and Newton-Raphson method NewtonRaphson().  '''
+
+# Solution
+
+
+class PolynomialSolver:
+	def Func(self,n,L,value):
+		k=0
+		for i in range(n+1):
+			k+=L[i]*(value**i)
+		return k
+	def Func_deriv(self,n,L,value):
+		k=0
+		for i in range(1,n+1):
+			k+=i*L[i]*(value**(i-1))
+		return k
+	def solve(self,n,L,method):
+		if(method=='bisection'):
+			lower=int(input("Input the lower bound of interval in which root lies :"))
+			upper=int(input("Input the upper bound of interval in which root lies :"))
+			it=int(input("Input the maximum number of itertions :"))
+			while(abs(self.Func(n,L,lower)-self.Func(n,L,upper))>0.00001 and it>0):
+				m=(lower+upper)/2
+				if(self.Func(n,L,lower)*self.Func(n,L,m)<0):
+					upper=m
+				else:
+					lower=m
+				print (lower,upper,self.Func(n,L,lower),self.Func(n,L,u))
+				it-=1
+			return([lower,upper])
+		if(method=='secant'):
+			lower=int(input("Input the lower bound of interval in which root lies :"))
+			upper=int(input("Input the upper bound of interval in which root lies :"))
+			it=int(input("Input the maximum number of itertions :"))
+			while(abs(self.Func(n,L,lower))>0.00001 and it>0):
+				func1=self.Func(n,L,lower)
+				func2=self.Func(n,L,upper)
+				lower,upper=upper,upper-(((upper-lower)*func2)/(func2-func1))
+				print (lower,upper,func1,func2)
+				it-=1
+			return(lower)
+		if(method=='secantRF'):
+			lower=int(input("Input the lower bound of interval in which root lies :"))
+			upper=int(input("Input the upper bound of interval in which root lies :"))
+			m=lower
+			it=int(input("Input the maximum number of itertions :"))
+			while(abs(self.Func(n,L,m))>0.00001 and it>0):
+				func1=self.Func(n,L,lower)
+				func2=self.Func(n,L,upper)
+				m=upper-(((upper-lower)*func2)/(func2-func1))
+				fm=self.Func(n,L,m)
+				if(func1*fm<0):
+					upper=m
+				else:
+					lower=m
+				print (m)
+				it-=1
+			return(lower)
+		if(method=='newtonraphson'):
+			print("Input the lower bound of interval in which root lies")
+			lower=int(input())
+			print("Input the maximum number of itertions")
+			it=int(input())
+			while(abs(self.Func(n,L,lower))>0.00001 and it>0):
+				lower=lower-self.Func(n,L,lower)/self.Func_deriv(n,L,lower)
+			return(lower)
+		else:
+			return NULL
