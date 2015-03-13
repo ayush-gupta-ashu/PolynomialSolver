@@ -39,6 +39,7 @@ class PolynomialSolver:
 				func1=self.Func(n,L,lower)
 				func2=self.Func(n,L,upper)
 				lower,upper=upper,upper-(((upper-lower)*func2)/(func2-func1))
+				print("the lower,upper,function1 and function2 are respectively :")
 				print (lower,upper,func1,func2)
 				it-=1
 			return(lower)
@@ -60,12 +61,11 @@ class PolynomialSolver:
 				it-=1
 			return(lower)
 		if(method=='newtonraphson'):
-			print("Input the lower bound of interval in which root lies")
-			lower=int(input())
-			print("Input the maximum number of itertions")
-			it=int(input())
+			lower=int(input("Input the lower bound of interval in which root lies"))
+			
+			it=int(input("Input the maximum number of itertions"))
 			while(abs(self.Func(n,L,lower))>0.00001 and it>0):
 				lower=lower-self.Func(n,L,lower)/self.Func_deriv(n,L,lower)
 			return(lower)
 		else:
-			return NULL
+			return None
